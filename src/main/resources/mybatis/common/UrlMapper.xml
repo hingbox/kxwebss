@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.bootdo.common.dao.UrlDao">
+
+	<select id="get" resultType="com.bootdo.common.domain.UrlDO">
+		select
+		`id`,`url`
+		from t_url where id = #{id}
+	</select>
+
+	<select id="list" resultType="com.bootdo.common.domain.UrlDO">
+		select
+		`id`,`url`
+		from t_url
+		<where>
+			<if test="id != null and id != ''"> and id = #{id} </if>
+			<if test="url != null and url != ''"> and url = #{url} </if>
+			<!--<if test="value != null and value != ''"> and value = #{value} </if>-->
+			<!--<if test="type != null and type != ''"> and type = #{type} </if>-->
+			<!--<if test="description != null and description != ''"> and description = #{description} </if>-->
+			<!--<if test="sort != null and sort != ''"> and sort = #{sort} </if>-->
+			<!--<if test="parentId != null and parentId != ''"> and parent_id = #{parentId} </if>-->
+			<!--<if test="createBy != null and createBy != ''"> and create_by = #{createBy} </if>-->
+			<!--<if test="createDate != null and createDate != ''"> and create_date = #{createDate} </if>-->
+			<!--<if test="updateBy != null and updateBy != ''"> and update_by = #{updateBy} </if>-->
+			<!--<if test="updateDate != null and updateDate != ''"> and update_date = #{updateDate} </if>-->
+			<!--<if test="remarks != null and remarks != ''"> and remarks = #{remarks} </if>-->
+			<!--<if test="delFlag != null and delFlag != ''"> and del_flag = #{delFlag} </if>-->
+		</where>
+		<!--<choose>-->
+			<!--<when test="sort != null and sort.trim() != ''">-->
+				<!--order by ${sort} ${order}-->
+			<!--</when>-->
+			<!--<otherwise>-->
+				<!--order by id desc-->
+			<!--</otherwise>-->
+		<!--</choose>-->
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+
+	<select id="count" resultType="int">
+		select count(*) from t_url
+		<where>
+			<if test="id != null and id != ''"> and id = #{id} </if>
+			<if test="url != null and url != ''"> and url = #{url} </if>
+			<!--<if test="value != null and value != ''"> and value = #{value} </if>-->
+			<!--<if test="type != null and type != ''"> and type = #{type} </if>-->
+			<!--<if test="description != null and description != ''"> and description = #{description} </if>-->
+			<!--<if test="sort != null and sort != ''"> and sort = #{sort} </if>-->
+			<!--<if test="parentId != null and parentId != ''"> and parent_id = #{parentId} </if>-->
+			<!--<if test="createBy != null and createBy != ''"> and create_by = #{createBy} </if>-->
+			<!--<if test="createDate != null and createDate != ''"> and create_date = #{createDate} </if>-->
+			<!--<if test="updateBy != null and updateBy != ''"> and update_by = #{updateBy} </if>-->
+			<!--<if test="updateDate != null and updateDate != ''"> and update_date = #{updateDate} </if>-->
+			<!--<if test="remarks != null and remarks != ''"> and remarks = #{remarks} </if>-->
+			<!--<if test="delFlag != null and delFlag != ''"> and del_flag = #{delFlag} </if>-->
+		</where>
+	</select>
+
+	<insert id="save" parameterType="com.bootdo.common.domain.UrlDO"
+		useGeneratedKeys="true" keyProperty="id">
+		insert into t_url
+		(
+		`url`
+		)
+		values
+		(
+		#{url}
+		)
+	</insert>
+
+	<update id="update" parameterType="com.bootdo.common.domain.UrlDO">
+		update t_url
+		<set>
+			<if test="url != null">`url` = #{url}, </if>
+
+		</set>
+		where id = #{id}
+	</update>
+
+	<delete id="remove">
+		delete from t_url where id = #{id}
+	</delete>
+
+	<delete id="batchRemove">
+		delete from t_url where id in
+		<foreach item="id" collection="array" open="(" separator=","
+			close=")">
+			#{id}
+		</foreach>
+	</delete>
+
+	<select id="listType" resultType="com.bootdo.common.domain.UrlDO">
+		select distinct `url`  from t_url
+	</select>
+
+</mapper>

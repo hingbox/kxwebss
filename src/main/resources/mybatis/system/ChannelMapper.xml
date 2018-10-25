@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.bootdo.system.dao.ChannelDao">
+
+	<select id="get" resultType="com.bootdo.system.domain.ChannelDO">
+		select `id`,`channel_id`,`channel_name`,`login_account`,`channel_type`,`contacts`,`link_name`,`phone`,`status`,`creator`,`created`,`updator`,`updated` from t_channel where id = #{value}
+	</select>
+
+	<select id="list" resultType="com.bootdo.system.domain.ChannelDO">
+		select `id`,`channel_id`,`channel_name`,`login_account`,`channel_type`,`contacts`,`link_name`,`phone`,`status`,`creator`,`created`,`updator`,`updated` from t_channel
+        <where>  
+		  		  <if test="id != null and id != ''"> and id = #{id} </if>
+		  		  <if test="channelId != null and channelId != ''"> and channel_id = #{channelId} </if>
+		  		  <if test="channelName != null and channelName != ''"> and channel_name = #{channelName} </if>
+		  		  <if test="loginAccount != null and loginAccount != ''"> and login_account = #{loginAccount} </if>
+		  		  <if test="channelType != null and channelType != ''"> and channel_type = #{channelType} </if>
+		  		  <if test="contacts != null and contacts != ''"> and contacts = #{contacts} </if>
+		  		  <if test="linkName != null and linkName != ''"> and link_name = #{linkName} </if>
+		  		  <if test="phone != null and phone != ''"> and phone = #{phone} </if>
+		  		  <if test="status != null and status != ''"> and status = #{status} </if>
+		  		  <if test="creator != null and creator != ''"> and creator = #{creator} </if>
+		  		  <if test="created != null and created != ''"> and created = #{created} </if>
+		  		  <if test="updator != null and updator != ''"> and updator = #{updator} </if>
+		  		  <if test="updated != null and updated != ''"> and updated = #{updated} </if>
+		  		</where>
+        <choose>
+            <when test="sort != null and sort.trim() != ''">
+                order by ${sort} ${order}
+            </when>
+			<otherwise>
+                order by id desc
+			</otherwise>
+        </choose>
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+	
+ 	<select id="count" resultType="int">
+		select count(*) from t_channel
+		 <where>  
+		  		  <if test="id != null and id != ''"> and id = #{id} </if>
+		  		  <if test="channelId != null and channelId != ''"> and channel_id = #{channelId} </if>
+		  		  <if test="channelName != null and channelName != ''"> and channel_name = #{channelName} </if>
+		  		  <if test="loginAccount != null and loginAccount != ''"> and login_account = #{loginAccount} </if>
+		  		  <if test="channelType != null and channelType != ''"> and channel_type = #{channelType} </if>
+		  		  <if test="contacts != null and contacts != ''"> and contacts = #{contacts} </if>
+		  		  <if test="linkName != null and linkName != ''"> and link_name = #{linkName} </if>
+		  		  <if test="phone != null and phone != ''"> and phone = #{phone} </if>
+		  		  <if test="status != null and status != ''"> and status = #{status} </if>
+		  		  <if test="creator != null and creator != ''"> and creator = #{creator} </if>
+		  		  <if test="created != null and created != ''"> and created = #{created} </if>
+		  		  <if test="updator != null and updator != ''"> and updator = #{updator} </if>
+		  		  <if test="updated != null and updated != ''"> and updated = #{updated} </if>
+		  		</where>
+	</select>
+	 
+	<insert id="save" parameterType="com.bootdo.system.domain.ChannelDO" useGeneratedKeys="true" keyProperty="id">
+		insert into t_channel
+		(
+			`channel_id`, 
+			`channel_name`, 
+			`login_account`, 
+			`channel_type`, 
+			`contacts`, 
+			`link_name`, 
+			`phone`, 
+			`status`, 
+			`creator`, 
+			`created`, 
+			`updator`, 
+			`updated`
+		)
+		values
+		(
+			#{channelId}, 
+			#{channelName}, 
+			#{loginAccount}, 
+			#{channelType}, 
+			#{contacts}, 
+			#{linkName}, 
+			#{phone}, 
+			#{status}, 
+			#{creator}, 
+			#{created}, 
+			#{updator}, 
+			#{updated}
+		)
+	</insert>
+	 
+	<update id="update" parameterType="com.bootdo.system.domain.ChannelDO">
+		update t_channel 
+		<set>
+			<if test="channelId != null">`channel_id` = #{channelId}, </if>
+			<if test="channelName != null">`channel_name` = #{channelName}, </if>
+			<if test="loginAccount != null">`login_account` = #{loginAccount}, </if>
+			<if test="channelType != null">`channel_type` = #{channelType}, </if>
+			<if test="contacts != null">`contacts` = #{contacts}, </if>
+			<if test="linkName != null">`link_name` = #{linkName}, </if>
+			<if test="phone != null">`phone` = #{phone}, </if>
+			<if test="status != null">`status` = #{status}, </if>
+			<if test="creator != null">`creator` = #{creator}, </if>
+			<if test="created != null">`created` = #{created}, </if>
+			<if test="updator != null">`updator` = #{updator}, </if>
+			<if test="updated != null">`updated` = #{updated}</if>
+		</set>
+		where id = #{id}
+	</update>
+	
+	<delete id="remove">
+		delete from t_channel where id = #{value}
+	</delete>
+	
+	<delete id="batchRemove">
+		delete from t_channel where id in 
+		<foreach item="id" collection="array" open="(" separator="," close=")">
+			#{id}
+		</foreach>
+	</delete>
+
+</mapper>

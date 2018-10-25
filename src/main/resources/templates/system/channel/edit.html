@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+<body class="gray-bg">
+	<div class="wrapper wrapper-content ">
+		<div class="row">
+			<div class="col-sm-12">
+				<div class="ibox float-e-margins">
+					<div class="ibox-content">
+						<form class="form-horizontal m-t" id="signupForm">
+						<input id="id" name="id" th:value="${.id}"  type="hidden">
+							<div class="form-group">	
+								<label class="col-sm-3 control-label">渠道id：</label>
+								<div class="col-sm-8">
+									<input id="channelId" name="channelId" th:value="${.channelId}" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">渠道名称：</label>
+								<div class="col-sm-8">
+									<input id="channelName" name="channelName" th:value="${.channelName}" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">登录账号：</label>
+								<div class="col-sm-8">
+									<input id="loginAccount" name="loginAccount" th:value="${.loginAccount}" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">渠道性质 0直客，1代理：</label>
+								<div class="col-sm-8">
+									<input id="channelType" name="channelType" th:value="${.channelType}" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">对接人：</label>
+								<div class="col-sm-8">
+									<input id="contacts" name="contacts" th:value="${.contacts}" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">联系人称呼：</label>
+								<div class="col-sm-8">
+									<input id="linkName" name="linkName" th:value="${.linkName}" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">联系方式：</label>
+								<div class="col-sm-8">
+									<input id="phone" name="phone" th:value="${.phone}" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">状态，1有效，-1无效：</label>
+								<div class="col-sm-8">
+									<input id="status" name="status" th:value="${.status}" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">创建人：</label>
+								<div class="col-sm-8">
+									<input id="creator" name="creator" th:value="${.creator}" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">创建时间：</label>
+								<div class="col-sm-8">
+									<input id="created" name="created" th:value="${.created}" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">更新人：</label>
+								<div class="col-sm-8">
+									<input id="updator" name="updator" th:value="${.updator}" class="form-control" type="text">
+								</div>
+							</div>
+														<div class="form-group">	
+								<label class="col-sm-3 control-label">更新时间：</label>
+								<div class="col-sm-8">
+									<input id="updated" name="updated" th:value="${.updated}" class="form-control" type="text">
+								</div>
+							</div>
+																					<div class="form-group">
+								<div class="col-sm-8 col-sm-offset-3">
+									<button type="submit" class="btn btn-primary">提交</button>
+								</div>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+	</div>
+	</div>
+	<div th:include="include::footer"></div>
+	<script type="text/javascript" src="/js/appjs/sys/channel/edit.js">
+	</script>
+</body>
+</html>

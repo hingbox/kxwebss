@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Pattern;
 
 @Controller
 @RequestMapping("/common/url")
@@ -63,6 +64,20 @@ public class UrlController extends BaseController {
 	public R save(UrlDO dict) {
 		if (Constant.DEMO_ACCOUNT.equals(getUsername())) {
 			return R.error(1, "演示系统不允许修改,完整体验请部署程序");
+		}
+		//判断请求的url是否合法
+		Pattern pattern = Pattern.compile("^([hH][tT]{2}[pP]://|[hH][tT]{2}[pP][sS]://)(([A-Za-z0-9-~]+).)+([A-Za-z0-9-~\\/])+$");
+		boolean flag = pattern.matcher(dict.getUrl()).matches();
+		if (flag) {
+		} else {
+			return R.error(1, "输入的url不合法，请从新输入");
+		}
+		//数据重复校验
+		Map<String, Object> map = new HashMap<>();
+		map.put("url", dict.getUrl());
+		int resultCount = urlService.count(map);
+		if (resultCount > 0) {
+			return R.error(1, "数据重复，无法重复添加");
 		}
 		if (urlService.save(dict) > 0) {
 			return R.ok();
@@ -114,7 +129,7 @@ public class UrlController extends BaseController {
 		return R.ok();
 	}
 
-	@GetMapping("/type")
+	@GetMapping("/url")
 	@ResponseBody
 	public List<UrlDO> listType() {
 		return urlService.listType();
@@ -130,11 +145,11 @@ public class UrlController extends BaseController {
 	}
 
 	@ResponseBody
-	@GetMapping("/list/{type}")
-	public List<UrlDO> listByType(@PathVariable("type") String type) {
+	@GetMapping("/list/{url}")
+	public List<UrlDO> listByType(@PathVariable("url") String type) {
 		// 查询列表数据
 		Map<String, Object> map = new HashMap<>(16);
-		map.put("type", type);
+		map.put("url", type);
 		List<UrlDO> dictList = urlService.list(map);
 		return dictList;
 	}

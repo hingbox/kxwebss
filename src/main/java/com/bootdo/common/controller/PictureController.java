@@ -20,14 +20,15 @@ import org.springframework.web.client.RestTemplate;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Pattern;
 
 @Controller
 @RequestMapping("/common/picture")
 public class PictureController extends BaseController {
 	//private static String tempPath = "e:/framework/webss/webss/src/main/resources/static/images/";
-	//private static String tempPath = "e:/OTA";
+	private static String tempPath = "e:/OTA";
 	//linux /home/software
-	private static String tempPath = "/home/software/images";
+	//private static String tempPath = "/home/software/images";
 	@Autowired
 	private PictureService pictureService;
 
@@ -75,11 +76,27 @@ public class PictureController extends BaseController {
 		if (Constant.DEMO_ACCOUNT.equals(getUsername())) {
 			return R.error(1, "演示系统不允许修改,完整体验请部署程序");
 		}
-		//FIXME
 		//根据传过来的url 和关键字进行 搜索
 		//得到url地址  请求
 		if (StringUtils.isEmpty(dict.getUrl()) || StringUtils.isEmpty(dict.getKeyword())) {
 			return R.error(1, "url与关键字不能为空");
+		}
+		//判断请求的url是否合法
+		Pattern pattern = Pattern.compile("^([hH][tT]{2}[pP]://|[hH][tT]{2}[pP][sS]://)(([A-Za-z0-9-~]+).)+([A-Za-z0-9-~\\/])+$");
+		boolean flag = pattern.matcher(dict.getUrl()).matches();
+		if (flag) {
+		} else {
+			return R.error(1, "输入的url不合法，请从新输入");
+		}
+
+		//数据重复校验
+		Map<String,Object> map = new HashMap<>();
+		map.put("url",dict.getUrl());
+		map.put("keyword",dict.getPicture());
+
+		int resultCount = pictureService.count(map);
+		if (resultCount>0) {
+			return R.error(1, "url和关键字 重复,无法分析，请修改关键字或者url");
 		}
 		ResponseEntity<String> responseEntity = restTemplate.getForEntity(dict.getUrl(), String.class);
 		String body = responseEntity.getBody().toString();
@@ -156,7 +173,7 @@ public class PictureController extends BaseController {
 		return R.ok();
 	}
 
-	@GetMapping("/type")
+	@GetMapping("/picture")
 	@ResponseBody
 	public List<PictureDO> listType() {
 		return pictureService.listType();
@@ -172,11 +189,11 @@ public class PictureController extends BaseController {
 	}
 
 	@ResponseBody
-	@GetMapping("/list/{type}")
-	public List<PictureDO> listByType(@PathVariable("type") String type) {
+	@GetMapping("/list/{keyword}")
+	public List<PictureDO> listByType(@PathVariable("keyword") String type) {
 		// 查询列表数据
 		Map<String, Object> map = new HashMap<>(16);
-		map.put("type", type);
+		map.put("keyword", type);
 		List<PictureDO> dictList = pictureService.list(map);
 		return dictList;
 	}

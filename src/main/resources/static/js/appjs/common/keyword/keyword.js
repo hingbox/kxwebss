@@ -25,11 +25,11 @@ $(function() {
 function selectLoad() {
 	var html = "";
 	$.ajax({
-		url : '/common/keyword/type',
+		url : '/common/keyword/keyword',
 		success : function(data) {
 			//加载数据
 			for (var i = 0; i < data.length; i++) {
-				html += '<option value="' + data[i].type + '">' + data[i].description + '</option>'
+				html += '<option value="' + data[i].keyword + '">' + data[i].keyword + '</option>'
 			}
 			$(".chosen-select").append(html);
 			$(".chosen-select").chosen({
@@ -40,7 +40,7 @@ function selectLoad() {
 				console.log(params.selected);
 				var opt = {
 					query : {
-						type : params.selected,
+						keyword : params.selected,
 					}
 				}
 				$('#exampleTable').bootstrapTable('refresh', opt);
@@ -79,7 +79,7 @@ function load() {
 						limit : params.limit,
 						offset : params.offset,
 						// name:$('#searchName').val(),
-						type : $('#searchName').val(),
+						keyword : $('#searchName').val(),
 					};
 				},
 				// //请求服务器数据时，你可以通过重写参数的方式添加一些额外的参数，例如 toolbar 中的参数 如果
@@ -177,7 +177,7 @@ function load() {
 function reLoad() {
 	var opt = {
 		query : {
-			type : $('.chosen-select').val(),
+			keyword : $('.chosen-select').val(),
 		}
 	}
 	$('#exampleTable').bootstrapTable('refresh', opt);
@@ -187,8 +187,8 @@ function add() {
 		type : 2,
 		title : '增加',
 		maxmin : true,
-		shadeClose : false, // 点击遮罩关闭层
-		area : [ '800px', '520px' ],
+		shadeClose : true, // 点击遮罩关闭层
+		area : [ '800px', '320px' ],
 		content : prefix + '/add' // iframe的url
 	});
 }

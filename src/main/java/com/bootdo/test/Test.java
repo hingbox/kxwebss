@@ -1,9 +1,7 @@
 package com.bootdo.test;
 
-import org.springframework.util.ResourceUtils;
-
-import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.regex.Pattern;
 
 /**
  * @ProjectName: bootdo
@@ -19,10 +17,14 @@ import java.io.FileNotFoundException;
  */
 public class Test {
     public static void main(String[]aa) throws FileNotFoundException {
-        //获取跟目录
-        File path = new File(ResourceUtils.getURL("classpath:").getPath());
-        if(!path.exists()) path = new File("");
-        System.out.println("path:"+path.getAbsolutePath());
+//        //获取跟目录
+//        File path = new File(ResourceUtils.getURL("classpath:").getPath());
+//        if(!path.exists()) path = new File("");
+//        System.out.println("path:"+path.getAbsolutePath());
+        String url="1212";
+        Pattern pattern = Pattern
+                .compile("^([hH][tT]{2}[pP]://|[hH][tT]{2}[pP][sS]://)(([A-Za-z0-9-~]+).)+([A-Za-z0-9-~\\/])+$");
+        System.out.println(pattern.matcher(url).matches());
     }
 
 

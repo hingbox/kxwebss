@@ -49,3 +49,10 @@ spring:
         max-active: 100
         # 连接池最大阻塞等待时间（使用负值表示没有限制）
         max-wait: -1
+
+#热部署生效
+spring.devtools.restart.enabled: true
+#设置重启的目录
+#spring.devtools.restart.additional-paths: src/main/java
+#classpath目录下的WEB-INF文件夹内容修改不重启
+spring.devtools.restart.exclude: WEB-INF/**

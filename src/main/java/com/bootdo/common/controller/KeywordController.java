@@ -64,6 +64,13 @@ public class KeywordController extends BaseController {
 		if (Constant.DEMO_ACCOUNT.equals(getUsername())) {
 			return R.error(1, "演示系统不允许修改,完整体验请部署程序");
 		}
+		//去重校验
+		Map<String,Object> map =new HashMap<String,Object>();
+		map.put("keyword",dict.getKeyword());
+		int resultCount = keywordService.count(map);
+		if (resultCount>0){
+			return R.error(1, "数据重复，无法重复添加!");
+		}
 		if (keywordService.save(dict) > 0) {
 			return R.ok();
 		}
@@ -114,7 +121,7 @@ public class KeywordController extends BaseController {
 		return R.ok();
 	}
 
-	@GetMapping("/type")
+	@GetMapping("/keyword")
 	@ResponseBody
 	public List<KeywordDO> listType() {
 		return keywordService.listType();
@@ -130,11 +137,11 @@ public class KeywordController extends BaseController {
 	}
 
 	@ResponseBody
-	@GetMapping("/list/{type}")
-	public List<KeywordDO> listByType(@PathVariable("type") String type) {
+	@GetMapping("/list/{keyword}")
+	public List<KeywordDO> listByType(@PathVariable("keyword") String keyword) {
 		// 查询列表数据
 		Map<String, Object> map = new HashMap<>(16);
-		map.put("type", type);
+		map.put("keyword", keyword);
 		List<KeywordDO> dictList = keywordService.list(map);
 		return dictList;
 	}

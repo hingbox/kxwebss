@@ -28,7 +28,7 @@ public class Html2ImageTest {
 
         imageGenerator.getBufferedImage();
 
-        imageGenerator.saveAsImage(tempPath+"你好.png");
+        imageGenerator.saveAsImage(tempPath+"新浪.png");
 
         //imageGenerator.saveAsHtmlWithMap("hello-world.html", "hello-world.png");
     }

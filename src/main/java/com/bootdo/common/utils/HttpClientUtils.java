@@ -27,7 +27,7 @@ public class HttpClientUtils {
             String info = "";
             StringBuffer sb = new StringBuffer();
             while (null != (info = br.readLine())){
-                System.out.println(info);
+                //System.out.println(info);
                 sb.append(info);
             }
             return sb.toString();
